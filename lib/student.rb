@@ -1,3 +1,4 @@
+require 'pry'
 class Student
   attr_accessor :name, :grade
   attr_reader :id
@@ -36,10 +37,12 @@ class Student
     SQL
  
     DB[:conn].execute(sql, self.name, self.grade)
+    @id = DB[:conn].execute("SELECT * FROM students")[0][0]
   end 
   
-  def self.create
-    student = Student.new(name, grade)
+  def self.create(hash)
+    #binding.pry
+    student = Student.new(hash[:name], hash[:grade])
     student.save
     student
   end  
